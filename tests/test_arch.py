@@ -211,9 +211,12 @@ exit 0
             self.assertIn("provides=(myapp=1.2.3-2)", pkgbuild)
 
     def test_pkgbuild_depends_on_the_x11_keyboard_library(self):
-        # winit's X11 backend loads libxkbcommon-x11 at startup and panics without it, and Arch
-        # ships it apart from libxkbcommon: a package without it could not open its window on
-        # X11 or XWayland.
+        """The PKGBUILD depends on libxkbcommon-x11 as well as libxkbcommon.
+
+        winit's X11 backend loads libxkbcommon-x11 at startup and panics without it, and Arch
+        ships it apart from libxkbcommon: a package without it could not open its window on
+        X11 or XWayland.
+        """
         with tempfile.TemporaryDirectory() as tmpdir:
             tmp_path = Path(tmpdir)
             tarball = self._create_fixture_tarball(tmp_path)
